@@ -167,6 +167,7 @@ class CygAptSetup:
                     print "    " + m[0] + " - " + m[1].__doc__
         sys.stdout.write(r'''
     Options:
+        -a, --no-update-ini     do not update setup.ini
         -d, --download          download only
         -h, --help              show brief usage
         -m, --mirror=URL        use mirror
@@ -1469,7 +1470,7 @@ def main():
         main_scriptname = main_scriptname[:-3]
     try:
         (main_options, main_files) = getopt.getopt(sys.argv[1:],
-            'adhm:t:xfsXyz', ('download', 'help', 'mirror=', 'dist=', 'no-deps',\
+            'adhm:t:xfsXyz', ('no-update-ini', 'download', 'help', 'mirror=', 'dist=', 'no-deps',\
             'regexp', 'nobarred', 'no-verify', 'nopostinstall', 'nopostremove')) 
     except getopt.GetoptError:
         cas.usage()
@@ -1487,7 +1488,7 @@ def main():
         a = i[1]
         if 0:
             pass
-        elif o == '-a':
+        elif o == '-a' or o == '--no-update-ini':
             main_noupdate = True
         elif o == '--download' or o == '-d':
             main_download_p = 1
