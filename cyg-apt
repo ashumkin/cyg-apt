@@ -630,6 +630,16 @@ class CygApt:
                         value += '\n' + lines[j]
                         if lines[j].find('"') != -1:
                             break
+                if key == 'message':
+                    p = value.find('"', 1)
+                    value = value[p:len(value)]
+                    if p != -1 and value.find('"', 1) == -1:
+                        while 1:
+                            j = j + 1
+                            value += '\n' + lines[j]
+                            if lines[j].find('"') != -1:
+                                break
+
                 records[key] = value
                 j = j + 1
             packages[name] = records
@@ -936,9 +946,12 @@ class CygApt:
         if d:
             s += ' - %s' % d[1:-1]
         ldesc = self.get_field('ldesc')
+        message = self.get_field('message')
         if ldesc != "":
             print s + "\n"
             print ldesc
+            if message != "":
+                print "\n" + message
         else:
             print "%s: not found in setup.ini: %s" % (self.sn, s)
     
